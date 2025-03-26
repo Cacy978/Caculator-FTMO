@@ -45,24 +45,6 @@
             <option value="CADCHF">CAD/CHF</option>
             <option value="CHFJPY">CHF/JPY</option>
         </optgroup>
-        <optgroup label="Vàng & Kim loại">
-            <option value="XAUUSD">Vàng (XAU/USD)</option>
-            <option value="XAGUSD">Bạc (XAG/USD)</option>
-        </optgroup>
-        <optgroup label="Chỉ số chứng khoán">
-            <option value="US30">US30 (Dow Jones)</option>
-            <option value="US500">US500 (S&P 500)</option>
-            <option value="NAS100">NAS100 (Nasdaq 100)</option>
-            <option value="GER30">GER30 (DAX 30)</option>
-            <option value="UK100">UK100 (FTSE 100)</option>
-        </optgroup>
-        <optgroup label="Crypto">
-            <option value="BTCUSDT">Bitcoin (BTC/USDT)</option>
-            <option value="ETHUSDT">Ethereum (ETH/USDT)</option>
-            <option value="BNBUSDT">BNB (BNB/USDT)</option>
-            <option value="XRPUSDT">XRP (XRP/USDT)</option>
-            <option value="ADAUSDT">Cardano (ADA/USDT)</option>
-        </optgroup>
     </select>
 
     <label for="entryPrice">Giá vào lệnh:</label>
@@ -82,18 +64,9 @@
     <script>
         function getPipValue(symbol, entryPrice) {
             if (symbol.endsWith("JPY")) {
-                return 1.0 / entryPrice;
+                return 0.01 / entryPrice * 100000;
             }
-            if (symbol === "XAUUSD") {
-                return 1.0;
-            }
-            if (symbol === "XAGUSD") {
-                return 0.1;
-            }
-            if (["US30", "US500", "NAS100", "GER30", "UK100"].includes(symbol)) {
-                return 1.0;
-            }
-            return 10.0 / entryPrice;
+            return 0.0001 / entryPrice * 100000;
         }
 
         function calculateLotSize() {
@@ -108,10 +81,10 @@
             }
             
             let pipValue = getPipValue(symbol, entryPrice);
-            let pipDifference = Math.abs(entryPrice - exitPrice) * (symbol.endsWith("JPY") ? 100 : 10000);
-            let lotSize = riskAmount / (pipDifference * pipValue);
+            let pipDifference = Math.abs(entryPrice - exitPrice) / (symbol.endsWith("JPY") ? 0.01 : 0.0001);
+            let lotSize = (riskAmount / (pipDifference * pipValue)).toFixed(2);
             
-            document.getElementById("result").textContent = `Lot size: ${lotSize.toFixed(2)}`;
+            document.getElementById("result").textContent = `Lot size: ${lotSize}`;
         }
     </script>
 </body>
