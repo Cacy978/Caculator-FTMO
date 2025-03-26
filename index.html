@@ -84,10 +84,10 @@
             if (symbol.includes("USD") && symbol !== "USDJPY" && symbol !== "XAUUSD" && symbol !== "XAGUSD") {
                 return 10.0 / entryPrice;
             }
-            if (symbol === "USDJPY" || symbol.endsWith("JPY")) {
-                return 10.0 / (entryPrice * 100);
+            if (symbol.endsWith("JPY")) {
+                return 1.0 / (entryPrice * 100);
             }
-            if (symbol === "USDCHF" || symbol.endsWith("CHF")) {
+            if (symbol.endsWith("CHF")) {
                 return 10.0 / entryPrice;
             }
             if (symbol === "XAUUSD") {
@@ -96,10 +96,10 @@
             if (symbol === "XAGUSD") {
                 return 0.1;
             }
-            if (symbol === "US30" || symbol === "US500" || symbol === "NAS100") {
-                return 0.1;
+            if (["US30", "US500", "NAS100", "GER30", "UK100"].includes(symbol)) {
+                return 1.0;
             }
-            if (symbol.includes("BTC") || symbol.includes("ETH") || symbol.includes("BNB") || symbol.includes("XRP") || symbol.includes("ADA")) {
+            if (["BTCUSDT", "ETHUSDT", "BNBUSDT", "XRPUSDT", "ADAUSDT"].includes(symbol)) {
                 return 1.0;
             }
             return 0.0;
