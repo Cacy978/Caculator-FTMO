@@ -81,14 +81,8 @@
 
     <script>
         function getPipValue(symbol, entryPrice) {
-            if (symbol.includes("USD") && symbol !== "USDJPY" && symbol !== "XAUUSD" && symbol !== "XAGUSD") {
-                return 10.0 / entryPrice;
-            }
             if (symbol.endsWith("JPY")) {
-                return 1.0 / (entryPrice * 100);
-            }
-            if (symbol.endsWith("CHF")) {
-                return 10.0 / entryPrice;
+                return 1.0 / entryPrice;
             }
             if (symbol === "XAUUSD") {
                 return 1.0;
@@ -99,10 +93,7 @@
             if (["US30", "US500", "NAS100", "GER30", "UK100"].includes(symbol)) {
                 return 1.0;
             }
-            if (["BTCUSDT", "ETHUSDT", "BNBUSDT", "XRPUSDT", "ADAUSDT"].includes(symbol)) {
-                return 1.0;
-            }
-            return 0.0;
+            return 10.0 / entryPrice;
         }
 
         function calculateLotSize() {
